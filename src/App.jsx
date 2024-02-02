@@ -6,21 +6,21 @@ import { random } from "nanoid";
 
 export default function App() {
   const [dice, setDice] = React.useState(allNewDice());
-  const [tenzie, setTenzie] = React.useState(false)
+  const [tenzie, setTenzie] = React.useState(false);
 
   function randomNumer() {
     return Math.ceil(Math.random() * 6);
   }
 
-  React.useEffect(() =>{
-    const firstDice = dice[0].value
-    const allHeld = dice.every(die => die.held)
-    const allSelected = dice.every(die => die.value === firstDice)
+  React.useEffect(() => {
+    const firstDice = dice[0].value;
+    const allHeld = dice.every((die) => die.held);
+    const allSelected = dice.every((die) => die.value === firstDice);
 
-    if(allHeld && allSelected){
-      setTenzie(true)
+    if (allHeld && allSelected) {
+      setTenzie(true);
     }
-  }, [dice])
+  }, [dice]);
 
   function allNewDice() {
     const newArray = [];
@@ -29,37 +29,40 @@ export default function App() {
         value: randomNumer(),
         held: false,
         id: i + 1,
-      }
+      };
       newArray.push(newDie);
     }
     return newArray;
   }
 
   function rollDice() {
-    setDice(olddice => olddice.map((die,i) => (
-      die.held ? die : {value:randomNumer(),held:false,id:i+1}
-    )))
+    if (!tenzie) {
+      setDice((olddice) =>
+        olddice.map((die, i) =>
+          die.held ? die : { value: randomNumer(), held: false, id: i + 1 }
+        )
+      );
+    } else {
+      setDice(allNewDice());
+      setTenzie(false);
+    }
   }
 
-  function holdDice(id){
-    if(!tenzie){
-      setDice(prevDice => prevDice.map((die) => {
-        return die.id === id ? {...die, held: !die.held} : die
-      }))
-    }
-    else{
-      setDice(allNewDice())
-      setTenzie(false)
-    }
+  function holdDice(id) {
+    setDice((prevDice) =>
+      prevDice.map((die) => {
+        return die.id === id ? { ...die, held: !die.held } : die;
+      })
+    );
   }
 
   const diceElement = dice.map((die) => (
-    <Die key={die.id} {...die} hold={() => holdDice(die.id)}/>
+    <Die key={die.id} {...die} hold={() => holdDice(die.id)} />
   ));
 
   return (
     <main>
-      {tenzie && <Confetti/>}
+      {tenzie && <Confetti />}
       <h1>Tenzies</h1>
       <p>
         Roll until all dice are the same. Click each die to freeze it at its
