@@ -61,3 +61,10 @@ p{
 .rollDice:focus {
   outline: none;
 }
+
+@media screen and (max-width: 500px) {
+  main{
+    width: 350px;
+    height: 350px;
+  }
+}
