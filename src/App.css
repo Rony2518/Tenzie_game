@@ -1,4 +1,4 @@
-body{
+body {
   background-color: #0B2434;
   padding: 10px;
   display: flex;
@@ -8,7 +8,7 @@ body{
   font-family: 'Karla', sans-serif;
 }
 
-main{
+main {
   background-color: #F5F5F5;
   padding: 20px;
   width: 450px;
@@ -20,14 +20,37 @@ main{
   flex-direction: column;
 }
 
-p{
+p {
   margin-top: 0;
   font-family: 'Inter', sans-serif;
   text-align: center;
   font-weight: 400;
 }
 
-.dieFace{
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header{
+  width: 100%;
+}
+
+.header h1{
+  font-size: 30px;
+}
+
+.score{
+  display: flex;
+}
+
+.score h3{
+  margin-left: 30px;
+  font-size: 20px;
+}
+
+.dieFace {
   border-radius: 14px;
   font-weight: bold;
   font-size: 20.5px;
@@ -36,13 +59,13 @@ p{
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
-.dices{
+.dices {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 10px;
 }
 
-.rollDice{
+.rollDice {
   background-color: #5035FF;
   color: white;
   font-size: 1.2rem;
@@ -63,8 +86,15 @@ p{
 }
 
 @media screen and (max-width: 500px) {
-  main{
+  main {
     width: 300px;
     height: 350px;
+  }
+  .score h3{
+    margin-left: 30px;
+    font-size: 12px;
+  }
+  .header h1{
+    font-size: 25px;
   }
 }

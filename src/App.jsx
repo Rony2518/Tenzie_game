@@ -7,6 +7,8 @@ import { random } from "nanoid";
 export default function App() {
   const [dice, setDice] = React.useState(allNewDice());
   const [tenzie, setTenzie] = React.useState(false);
+  const [rollCount, setRollCount] = React.useState(0);
+  const [time, setTime] = React.useState(0);
 
   function randomNumer() {
     return Math.ceil(Math.random() * 6);
@@ -42,9 +44,12 @@ export default function App() {
           die.held ? die : { value: randomNumer(), held: false, id: i + 1 }
         )
       );
+      setRollCount((prevCount) => prevCount + 1);
     } else {
-      setDice(allNewDice());
+      setDice(allNewDice())
       setTenzie(false);
+      setRollCount(0)
+      setTime(0)
     }
   }
 
@@ -60,10 +65,33 @@ export default function App() {
     <Die key={die.id} {...die} hold={() => holdDice(die.id)} />
   ));
 
+  React.useEffect(() => {
+    let interval;
+    
+    if (tenzie) {
+      clearInterval(interval);
+    } else {
+      const isHeld = dice.some(die => die.held)
+      if(isHeld){
+        interval = setInterval(() => {
+          setTime((prevTime) => prevTime + 1);
+        }, 1000)
+      }
+    }
+
+    return () => clearInterval(interval);
+  }, [tenzie,dice]);
+
   return (
     <main>
       {tenzie && <Confetti />}
-      <h1>Tenzies</h1>
+      <div className="header flex">
+        <h1>Tenzies</h1>
+        <div className="score">
+          <h3>Roll Count:{rollCount}</h3>
+          <h3>Time:{time}</h3>
+        </div>
+      </div>
       <p>
         Roll until all dice are the same. Click each die to freeze it at its
         current value between rolls.
