@@ -1,6 +1,5 @@
 body {
   background-color: #0B2434;
-  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,6 +26,12 @@ p {
   font-weight: 400;
 }
 
+.die{
+  width: 50px;
+  height: 50px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);  
+}
+
 .flex {
   display: flex;
   align-items: center;
@@ -50,13 +55,18 @@ p {
   font-size: 20px;
 }
 
+.dieImg{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .dieFace {
   border-radius: 14px;
   font-weight: bold;
   font-size: 20.5px;
   color: #2B283A;
-  padding: 20px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  padding: 2px;
 }
 
 .dices {
@@ -69,6 +79,7 @@ p {
   background-color: #5035FF;
   color: white;
   font-size: 1.2rem;
+  font-weight: 500;
   width: 100px;
   height: 50px;
   margin-top: 30px;

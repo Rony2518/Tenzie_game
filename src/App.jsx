@@ -2,16 +2,24 @@ import React from "react";
 import Confetti from "react-confetti";
 import "./App.css";
 import Die from "./Die";
+import dice1 from "../images/dice1.png";
+import dice2 from "../images/dice2.png";
+import dice3 from "../images/dice3.png";
+import dice4 from "../images/dice4.png";
+import dice5 from "../images/dice5.png";
+import dice6 from "../images/dice6.png";
+
 import { random } from "nanoid";
 
 export default function App() {
+  const allDiceImages = [dice1, dice2, dice3, dice4, dice5, dice6];
   const [dice, setDice] = React.useState(allNewDice());
   const [tenzie, setTenzie] = React.useState(false);
   const [rollCount, setRollCount] = React.useState(0);
   const [time, setTime] = React.useState(0);
 
   function randomNumer() {
-    return Math.ceil(Math.random() * 6);
+    return Math.floor(Math.random() * 6)
   }
 
   React.useEffect(() => {
@@ -28,7 +36,7 @@ export default function App() {
     const newArray = [];
     for (let i = 0; i < 10; i++) {
       const newDie = {
-        value: randomNumer(),
+        value: allDiceImages[randomNumer()],
         held: false,
         id: i + 1,
       };
@@ -41,13 +49,13 @@ export default function App() {
     if (!tenzie) {
       setDice((olddice) =>
         olddice.map((die, i) =>
-          die.held ? die : { value: randomNumer(), held: false, id: i + 1 }
+          die.held ? die : { value: allDiceImages[randomNumer()], held: false, id: i + 1 }
         )
       );
       setRollCount((prevCount) => prevCount + 1);
     } else {
       setDice(allNewDice())
-      setTenzie(false);
+      setTenzie(false)
       setRollCount(0)
       setTime(0)
     }
@@ -89,7 +97,7 @@ export default function App() {
         <h1>Tenzies</h1>
         <div className="score">
           <h3>Roll Count:{rollCount}</h3>
-          <h3>Time:{time}</h3>
+          <h3>Time:{time}s</h3>
         </div>
       </div>
       <p>
@@ -97,7 +105,7 @@ export default function App() {
         current value between rolls.
       </p>
       <div className="dices">{diceElement}</div>
-      <button className="rollDice" onClick={rollDice}>
+      <button className="rollDice" onClick={rollDice} disabled={!dice.some(die => die.held)}>
         {tenzie ? "Reset Game" : "Roll"}
       </button>
     </main>
